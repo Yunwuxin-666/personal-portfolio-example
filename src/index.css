@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Source credit / QA manifest (attribution only — these URLs are never rendered).
+  Creator: MotionSites · https://motionsites.ai/
+  Exact source: https://motionsites.ai/?prompt=contact-cybernetic
+  Foxora showcase: https://showcase.foxora.studio/prompts/motion-contact-cybernetic/
+  Foxora poster (QA only): https://showcase.foxora.studio/thumbnails/motion-contact-cybernetic.webp
+  Foxora motion (QA only): https://showcase.foxora.studio/motion/motion-contact-cybernetic.webp
+  Original visual (QA only): https://pub-86dc5b5484314368ac5436a674b0d919.r2.dev/hero%20sections/animated%20(42).webp
+  Runtime media (source-provided, allowed by the public recipe):
+  https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260601_110537_3a579fa0-7bbc-4d94-9d25-0e816c7840f5.mp4
+*/
+
+:root {
+  --canvas: #f5f3fd;
+  --surface: #ffffff;
+  --text: #17161c;
+  --muted: #5a635a;
+  --border: #f1f3f1;
+  --accent: #1c2e1e;
+  --shadow: 0 10px 30px rgba(28, 46, 30, 0.08);
+  --radius: 16px;
+  --gutter: 32px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #eaece9;
+  color: #1c2e1e;
+}
+
+/* The reference capture uses a tighter crop of the source film than a plain
+   16:9 object-cover fit at 1440x900. Enlarge only the film layer on desktop;
+   the surrounding container keeps the measured full-viewport geometry. */
+@media (min-width: 1024px) {
+  .film-zoom {
+    position: absolute;
+    left: -15.4%;
+    top: -1.7%;
+    width: 118%;
+    height: 118%;
+    max-width: none;
+    object-position: 100% 100%;
+  }
+}
+
+@keyframes caret-blink {
+  0%, 48% { opacity: 1; }
+  49%, 100% { opacity: 0; }
+}
+
+.type-caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.94em;
+  margin-left: 0.06em;
+  background: var(--text);
+  vertical-align: -0.12em;
+  animation: caret-blink 1s steps(1, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .type-caret { animation: none; opacity: 1; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

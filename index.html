@@ -1,166 +1,20 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>个人作品集示例 · Portfolio</title>
-  <style>
-    :root {
-      --bg: #f7f8fa;
-      --surface: #ffffff;
-      --text: #1f2329;
-      --muted: #646a73;
-      --primary: #2563eb;
-      --primary-soft: #e8f0fe;
-      --border: #e5e6eb;
-      --radius: 14px;
-      --shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(1080px, 92%); margin: 0 auto; }
-    header {
-      position: sticky; top: 0; z-index: 10;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; }
-    .logo { font-weight: 700; font-size: 1.1rem; }
-    .logo span { color: var(--primary); }
-    .nav-links { display: flex; gap: 24px; font-size: 0.94rem; color: var(--muted); }
-    .nav-links a:hover { color: var(--primary); }
-    .hero { padding: 96px 0 72px; text-align: center; }
-    .avatar {
-      width: 104px; height: 104px; border-radius: 50%;
-      background: linear-gradient(135deg, #60a5fa, #2563eb);
-      color: #fff; display: grid; place-items: center;
-      font-size: 2.4rem; font-weight: 700; margin: 0 auto 24px;
-      box-shadow: var(--shadow);
-    }
-    .hero h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.02em; }
-    .hero h1 span { color: var(--primary); }
-    .hero p { color: var(--muted); font-size: 1.1rem; max-width: 620px; margin: 16px auto 28px; }
-    .btn {
-      display: inline-block; padding: 11px 24px; border-radius: 999px;
-      background: var(--primary); color: #fff; font-weight: 600; font-size: 0.95rem;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
-    }
-    .btn:hover { opacity: 0.9; }
-    section { padding: 64px 0; }
-    .section-title { font-size: 1.7rem; margin-bottom: 28px; }
-    .section-title::after {
-      content: ""; display: block; width: 44px; height: 4px;
-      background: var(--primary); border-radius: 2px; margin-top: 10px;
-    }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-    .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.09); }
-    .card .tag {
-      display: inline-block; font-size: 0.75rem; color: var(--primary);
-      background: var(--primary-soft); padding: 3px 10px; border-radius: 999px; margin-bottom: 12px;
-    }
-    .card h3 { font-size: 1.15rem; margin-bottom: 8px; }
-    .card p { color: var(--muted); font-size: 0.94rem; }
-    .skills { display: flex; flex-wrap: wrap; gap: 10px; }
-    .skill {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 999px; padding: 8px 18px; font-size: 0.92rem;
-    }
-    .contact { text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 48px 24px; }
-    .contact p { color: var(--muted); margin-bottom: 20px; }
-    footer { text-align: center; color: var(--muted); font-size: 0.88rem; padding: 40px 0 32px; }
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .hero { padding: 64px 0 48px; }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="container nav">
-      <div class="logo">My<span>Portfolio</span></div>
-      <nav class="nav-links">
-        <a href="#about">关于</a>
-        <a href="#projects">作品</a>
-        <a href="#skills">技能</a>
-        <a href="#contact">联系</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero container">
-      <div class="avatar">W</div>
-      <h1>你好，我是 <span>你的名字</span></h1>
-      <p>一名热爱创造的开发者 / 设计师。这里展示我的项目、技能与成长轨迹——把想法变成真实可用的东西，是我最开心的事。</p>
-      <a class="btn" href="#projects">查看我的作品</a>
-    </section>
-
-    <section id="about" class="container">
-      <h2 class="section-title">关于我</h2>
-      <div class="card">
-        <p>在这里写一段简短的自我介绍：你的背景、你擅长什么、你正在探索什么。保持真诚、具体，让人一眼记住你。</p>
-      </div>
-    </section>
-
-    <section id="projects" class="container">
-      <h2 class="section-title">精选作品</h2>
-      <div class="grid">
-        <article class="card">
-          <span class="tag">Web 应用</span>
-          <h3>项目一 · 数据看板</h3>
-          <p>一个用于展示关键指标的可视化看板。写成你真实做过的项目，说明解决了什么问题、用了什么技术。</p>
-        </article>
-        <article class="card">
-          <span class="tag">开源工具</span>
-          <h3>项目二 · 效率小工具</h3>
-          <p>一个让日常任务更轻松的命令行工具。可以放上仓库链接、Star 数和一句话亮点。</p>
-        </article>
-        <article class="card">
-          <span class="tag">设计实验</span>
-          <h3>项目三 · 交互实验</h3>
-          <p>一次关于动效与体验的探索。描述你的设计思路、用户反馈和最终效果。</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="skills" class="container">
-      <h2 class="section-title">技能栈</h2>
-      <div class="skills">
-        <span class="skill">HTML / CSS</span>
-        <span class="skill">JavaScript</span>
-        <span class="skill">TypeScript</span>
-        <span class="skill">React</span>
-        <span class="skill">Node.js</span>
-        <span class="skill">Python</span>
-        <span class="skill">Git</span>
-        <span class="skill">Figma</span>
-      </div>
-    </section>
-
-    <section id="contact" class="container">
-      <div class="contact">
-        <h2 class="section-title" style="text-align:center">联系我</h2>
-        <p>有想法想一起做点什么？欢迎通过邮件或社交平台找到我。</p>
-        <a class="btn" href="mailto:hello@example.com">发送邮件</a>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">© 2026 你的名字 · 用热爱与代码构建</div>
-  </footer>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f3fd" />
+    <link rel="icon" href="data:," />
+    <title>Contact — Mainframe®</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
