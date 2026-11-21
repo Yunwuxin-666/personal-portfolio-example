@@ -18,11 +18,55 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 const VIDEO_SRC =
   'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260601_110537_3a579fa0-7bbc-4d94-9d25-0e816c7840f5.mp4';
 
-const HEADLINE = "we'd love to\nhear from you!";
-const INTRO = "Whether you have questions, feedback,";
-const INTRO_2 = "drop us a message and we'll get back to you as soon as possible.";
 const SERVICES = ['Brand', 'Digital', 'Campaign', 'Other'];
 const LINKS = ['Labs', 'Studio', 'Openings', 'Shop'];
+
+const TRANSLATIONS = {
+  en: {
+    nav: { Labs: 'Labs', Studio: 'Studio', Openings: 'Openings', Shop: 'Shop' },
+    contact: 'Get in touch',
+    headline: "we'd love to\nhear from you!",
+    intro1: 'Whether you have questions, feedback,',
+    intro2: "drop us a message and we'll get back to you as soon as possible.",
+    serviceHeading: 'What sort of service?',
+    helper: 'Select all that apply',
+    services: SERVICES,
+    empty: 'Please click to select services above.',
+    banner: (values) => `Ready to inquire about: ${values}`,
+    go: "Let's Go",
+    submitted: "Thanks — your inquiry is ready. We'll be in touch shortly.",
+    reset: 'Start over',
+    videoLabel: 'Glossy cybernetic bust rotating in iridescent light',
+    menuLabel: 'Site menu',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
+    homeLabel: 'Mainframe home',
+    servicesLabel: 'Select services',
+    langSwitch: '切换到中文',
+  },
+  zh: {
+    nav: { Labs: '实验室', Studio: '工作室', Openings: '职位', Shop: '商店' },
+    contact: '联系我们',
+    headline: '我们期待\n收到你的来信！',
+    intro1: '无论是疑问还是反馈，',
+    intro2: '给我们留言，我们会尽快回复。',
+    serviceHeading: '您需要哪类服务？',
+    helper: '可多选',
+    services: ['品牌', '数字', '营销活动', '其他'],
+    empty: '请先点击上方选择服务。',
+    banner: (values) => `已选择咨询：${values}`,
+    go: '马上开始',
+    submitted: '已收到您的咨询，我们会尽快联系您。',
+    reset: '重新开始',
+    videoLabel: '光泽赛博人像在虹彩光线中旋转',
+    menuLabel: '网站菜单',
+    openMenu: '打开菜单',
+    closeMenu: '关闭菜单',
+    homeLabel: 'Mainframe 首页',
+    servicesLabel: '选择服务',
+    langSwitch: 'Switch to English',
+  },
+};
 
 function useTypewriter(text, speed = 38, startDelay = 600) {
   const prefersReduced = useReducedMotion();
@@ -78,7 +122,7 @@ function useIsDesktop() {
   return isDesktop;
 }
 
-function Header({ menuOpen, setMenuOpen, reducedMotion }) {
+function Header({ menuOpen, setMenuOpen, reducedMotion, lang, setLang, t }) {
   useEffect(() => {
     if (!menuOpen) return undefined;
     const onKeyDown = (event) => {
@@ -99,7 +143,7 @@ function Header({ menuOpen, setMenuOpen, reducedMotion }) {
           <a
             href="/"
             className="shrink-0 text-[17px] font-medium leading-none tracking-[-0.02em] text-[#17161c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1c2e1e] focus-visible:ring-offset-4 lg:text-[26px]"
-            aria-label="Mainframe home"
+            aria-label={t.homeLabel}
           >
             Mainframe<sup className="ml-0.5 text-[0.55em] leading-none">®</sup>
             <span className="ml-1.5 align-middle text-[0.55em] leading-none" aria-hidden="true">
@@ -114,7 +158,7 @@ function Header({ menuOpen, setMenuOpen, reducedMotion }) {
                   href={`/${label.toLowerCase()}`}
                   className="text-[13px] leading-none tracking-[-0.01em] text-[#24242a] opacity-80 transition-opacity hover:opacity-45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1c2e1e] focus-visible:ring-offset-4 lg:text-[23px]"
                 >
-                  {label}
+                  {t.nav[label]}
                 </a>
                 {index < LINKS.length - 1 && (
                   <span className="text-[13px] text-[#8d8c95] lg:text-[23px]" aria-hidden="true">
@@ -125,21 +169,37 @@ function Header({ menuOpen, setMenuOpen, reducedMotion }) {
             ))}
           </nav>
 
-          <a
-            href="/contact"
-            className="hidden shrink-0 text-[12px] leading-none text-[#17161c] underline underline-offset-[3px] transition-opacity hover:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1c2e1e] focus-visible:ring-offset-4 md:inline-block lg:text-[19px]"
-          >
-            Get in touch
-          </a>
+          <div className="flex shrink-0 items-center gap-3 lg:gap-5">
+            <button
+              type="button"
+              data-language-toggle="true"
+              onClick={() => setLang((current) => (current === 'en' ? 'zh' : 'en'))}
+              aria-label={t.langSwitch}
+              aria-pressed={lang === 'zh'}
+              className="inline-flex h-11 min-w-[62px] items-center justify-center gap-1 rounded-full border border-[#e3e7e1] bg-white/80 px-2.5 text-[12px] font-medium text-[#17161c] shadow-[0_1px_2px_rgba(20,30,20,0.04)] transition-colors hover:bg-[#f7f9f6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1c2e1e] focus-visible:ring-offset-2"
+            >
+              <span className={lang === 'zh' ? 'text-[#1c2e1e]' : 'text-[#9a9da0]'}>中</span>
+              <span className="text-[#c9cdc7]" aria-hidden="true">
+                /
+              </span>
+              <span className={lang === 'en' ? 'text-[#1c2e1e]' : 'text-[#9a9da0]'}>EN</span>
+            </button>
 
-          <button
-            type="button"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            onClick={() => setMenuOpen((open) => !open)}
-            className="relative inline-flex h-11 w-11 items-center justify-center rounded-md text-[#17161c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1c2e1e] focus-visible:ring-offset-4 md:hidden"
-          >
+            <a
+              href="/contact"
+              className="hidden text-[12px] leading-none text-[#17161c] underline underline-offset-[3px] transition-opacity hover:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1c2e1e] focus-visible:ring-offset-4 md:inline-block lg:text-[19px]"
+            >
+              {t.contact}
+            </a>
+
+            <button
+              type="button"
+              aria-label={menuOpen ? t.closeMenu : t.openMenu}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              onClick={() => setMenuOpen((open) => !open)}
+              className="relative inline-flex h-11 w-11 items-center justify-center rounded-md text-[#17161c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1c2e1e] focus-visible:ring-offset-4 md:hidden"
+            >
             <span className="relative block h-[14px] w-[22px]">
               <motion.span
                 className="absolute left-0 block h-[1.5px] w-full rounded bg-current"
@@ -159,7 +219,8 @@ function Header({ menuOpen, setMenuOpen, reducedMotion }) {
                 style={{ top: 11 }}
               />
             </span>
-          </button>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -169,7 +230,7 @@ function Header({ menuOpen, setMenuOpen, reducedMotion }) {
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
-            aria-label="Site menu"
+            aria-label={t.menuLabel}
             initial={reducedMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={reducedMotion ? { opacity: 1 } : { opacity: 0 }}
@@ -184,7 +245,7 @@ function Header({ menuOpen, setMenuOpen, reducedMotion }) {
                   onClick={() => setMenuOpen(false)}
                   className="flex min-h-[52px] items-center border-b border-[#ecefeb] text-[24px] tracking-[-0.02em] text-[#17161c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1c2e1e]"
                 >
-                  {label}
+                  {t.nav[label] || t.contact}
                 </a>
               ))}
             </nav>
@@ -195,7 +256,7 @@ function Header({ menuOpen, setMenuOpen, reducedMotion }) {
   );
 }
 
-function CyberneticFilm({ desktop, reducedMotion }) {
+function CyberneticFilm({ desktop, reducedMotion, videoLabel }) {
   const videoRef = useRef(null);
   const lastX = useRef(null);
   const targetTime = useRef(0);
@@ -288,14 +349,14 @@ function CyberneticFilm({ desktop, reducedMotion }) {
         loop
         autoPlay={!desktop && !reducedMotion}
         preload="auto"
-        aria-label="Glossy cybernetic bust rotating in iridescent light"
+        aria-label={videoLabel}
         tabIndex={-1}
       />
     </div>
   );
 }
 
-function ServicePills({ selected, setSelected, reducedMotion, onGo, submitted, onReset }) {
+function ServicePills({ selected, setSelected, reducedMotion, onGo, submitted, onReset, t }) {
   const toggle = (service) => {
     setSelected((current) =>
       current.includes(service)
@@ -310,16 +371,16 @@ function ServicePills({ selected, setSelected, reducedMotion, onGo, submitted, o
         id="services-heading"
         className="text-[21px] font-normal tracking-[-0.025em] text-[var(--accent)] lg:text-[28px]"
       >
-        What sort of service?
+        {t.serviceHeading}
       </h2>
-      <p className="mt-1.5 text-[13px] text-[#8a918a] lg:text-[14px]">Select all that apply</p>
+      <p className="mt-1.5 text-[13px] text-[#8a918a] lg:text-[14px]">{t.helper}</p>
 
       <div
         role="group"
-        aria-label="Select services"
+        aria-label={t.servicesLabel}
         className="mt-6 flex flex-wrap items-center gap-2.5 lg:mt-7 lg:gap-3"
       >
-        {SERVICES.map((service) => {
+        {SERVICES.map((service, index) => {
           const active = selected.includes(service);
           return (
             <motion.button
@@ -360,7 +421,7 @@ function ServicePills({ selected, setSelected, reducedMotion, onGo, submitted, o
                   </motion.svg>
                 )}
               </AnimatePresence>
-              {service}
+              {t.services[index]}
             </motion.button>
           );
         })}
@@ -378,14 +439,14 @@ function ServicePills({ selected, setSelected, reducedMotion, onGo, submitted, o
               className="max-w-xl rounded-2xl border border-[#e6ebe5] bg-[#fafbf9] p-5 shadow-[var(--shadow)]"
             >
               <p className="text-[15px] text-[var(--accent)]">
-                Thanks — your inquiry is ready. We&apos;ll be in touch shortly.
+                {t.submitted}
               </p>
               <button
                 type="button"
                 onClick={onReset}
                 className="mt-3 min-h-[44px] rounded-lg border border-[#e6ebe5] bg-white px-4 text-[13px] font-medium text-[var(--accent)] hover:bg-[#f7f9f6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
               >
-                Start over
+                {t.reset}
               </button>
             </motion.div>
           ) : selected.length === 0 ? (
@@ -397,7 +458,7 @@ function ServicePills({ selected, setSelected, reducedMotion, onGo, submitted, o
               transition={{ duration: reducedMotion ? 0 : 0.2 }}
               className="text-[12px] italic text-[var(--accent)] opacity-50"
             >
-              Please click to select services above.
+              {t.empty}
             </motion.p>
           ) : (
             <motion.div
@@ -409,14 +470,18 @@ function ServicePills({ selected, setSelected, reducedMotion, onGo, submitted, o
               className="flex max-w-xl flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#e6ebe5] bg-[#fafbf9] p-5 shadow-[var(--shadow)]"
             >
               <p className="text-[14px] leading-snug text-[var(--accent)] lg:text-[15px]">
-                Ready to inquire about: {selected.join(', ')}
+                {t.banner(
+                  selected
+                    .map((value) => t.services[SERVICES.indexOf(value)] || value)
+                    .join(', '),
+                )}
               </p>
               <button
                 type="button"
                 onClick={onGo}
                 className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-[var(--accent)] px-5 text-[14px] font-medium text-white transition-colors hover:bg-[#2a4430] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2"
               >
-                Let&apos;s Go
+                {t.go}
               </button>
             </motion.div>
           )}
@@ -429,16 +494,33 @@ function ServicePills({ selected, setSelected, reducedMotion, onGo, submitted, o
 export default function App() {
   const prefersReduced = Boolean(useReducedMotion());
   const isDesktop = useIsDesktop();
-  const { displayed, done } = useTypewriter(HEADLINE);
+  const [lang, setLang] = useState('en');
+  const t = TRANSLATIONS[lang];
+  const { displayed, done } = useTypewriter(t.headline);
   const [selected, setSelected] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  useEffect(() => {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  }, [lang]);
+
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-hidden bg-white font-sans text-neutral-900 antialiased selection:bg-[#eaece9] selection:text-[#1c2e1e] lg:block lg:min-h-screen">
-      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} reducedMotion={prefersReduced} />
+      <Header
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
+        reducedMotion={prefersReduced}
+        lang={lang}
+        setLang={setLang}
+        t={t}
+      />
 
-      <CyberneticFilm desktop={isDesktop} reducedMotion={prefersReduced} />
+      <CyberneticFilm
+        desktop={isDesktop}
+        reducedMotion={prefersReduced}
+        videoLabel={t.videoLabel}
+      />
 
       <main className="relative z-10 order-first flex flex-1 flex-col justify-center px-5 pb-16 pt-28 sm:px-8 lg:flex lg:min-h-screen lg:flex-none lg:items-center lg:pb-0 lg:pt-0">
         <div className="mx-auto w-full max-w-7xl lg:pl-5">
@@ -448,9 +530,9 @@ export default function App() {
           </h1>
 
           <p className="mt-7 max-w-[640px] text-[clamp(15px,1.35vw,20px)] leading-[1.5] text-[var(--muted)] lg:mt-8">
-            {INTRO}
+            {t.intro1}
             <br />
-            {INTRO_2}
+            {t.intro2}
           </p>
 
           <ServicePills
@@ -463,6 +545,7 @@ export default function App() {
               setSubmitted(false);
               setSelected([]);
             }}
+            t={t}
           />
         </div>
       </main>
